@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.xkball.terrain_tectonic_trilithic.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "terrain_tectonic_trilithic.refmap.json",
+  "mixins": [
+
+  ],
+  "client": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
