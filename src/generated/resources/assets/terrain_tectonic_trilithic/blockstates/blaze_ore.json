@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "terrain_tectonic_trilithic:block/blaze_ore"
+    }
+  }
+}

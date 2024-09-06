@@ -1,0 +1,18 @@
+{
+  "feature": {
+    "type": "terrain_tectonic_trilithic:lake_bottom_block",
+    "config": {}
+  },
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 4
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

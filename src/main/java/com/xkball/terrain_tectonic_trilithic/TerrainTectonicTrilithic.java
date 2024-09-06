@@ -4,6 +4,9 @@ import com.xkball.terrain_tectonic_trilithic.common.block.TTBlocks;
 import com.xkball.terrain_tectonic_trilithic.common.item.TTItems;
 import com.xkball.terrain_tectonic_trilithic.registry.AutoRegManager;
 import com.xkball.terrain_tectonic_trilithic.registry.TTRegistries;
+import com.xkball.terrain_tectonic_trilithic.test.PredicateTest;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -16,9 +19,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 @Mod(TerrainTectonicTrilithic.MODID)
+@EventBusSubscriber(modid = TerrainTectonicTrilithic.MODID)
 public class TerrainTectonicTrilithic {
     
     public static final String MODID = "terrain_tectonic_trilithic";
@@ -32,17 +35,18 @@ public class TerrainTectonicTrilithic {
         TTRegistries.init(modEventBus);
         AutoRegManager.init(modContainer);
         modEventBus.addListener(this::commonSetup);
+        
     }
     
     
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+    
     }
     
     
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-
+    public static void onServerStarted(ServerStartedEvent event) {
+        if(!FMLEnvironment.production) PredicateTest.runTestAfterServerInit(event.getServer());
     }
 
 

@@ -3,6 +3,13 @@ package com.xkball.terrain_tectonic_trilithic.datagen;
 import com.xkball.terrain_tectonic_trilithic.TerrainTectonicTrilithic;
 import com.xkball.terrain_tectonic_trilithic.api.reg.RegBlock;
 import com.xkball.terrain_tectonic_trilithic.api.reg.RegItem;
+import com.xkball.terrain_tectonic_trilithic.datagen.block.ModBlockModelProvider;
+import com.xkball.terrain_tectonic_trilithic.datagen.block.ModBlockTagProvider;
+import com.xkball.terrain_tectonic_trilithic.datagen.item.ModItemModelProvider;
+import com.xkball.terrain_tectonic_trilithic.datagen.item.ModItemTagProvider;
+import com.xkball.terrain_tectonic_trilithic.datagen.worldgen.ConfiguredFeatureProvider;
+import com.xkball.terrain_tectonic_trilithic.datagen.worldgen.FeatureReplacementProvider;
+import com.xkball.terrain_tectonic_trilithic.datagen.worldgen.PlacedFeatureProvider;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -13,17 +20,26 @@ import java.util.Map;
 
 @EventBusSubscriber(modid = TerrainTectonicTrilithic.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class TTDataGen {
-
+    
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event){
         var existingFileHelper = event.getExistingFileHelper();
         var dataGenerator = event.getGenerator();
-        var run = event.includeClient();
+        var runClient = event.includeClient();
+        var runServer = event.includeServer();
         var packOutput = dataGenerator.getPackOutput();
-        dataGenerator.addProvider(run,LangUtils.getEN_US(packOutput));
-        dataGenerator.addProvider(run,LangUtils.getZH_CN(packOutput));
-        dataGenerator.addProvider(run,new ModBlockModelProvider(packOutput,existingFileHelper));
-        dataGenerator.addProvider(run,new ModItemModelProvider(packOutput,existingFileHelper));
+        var registries = event.getLookupProvider();
+        
+        dataGenerator.addProvider(runClient,LangUtils.getEN_US(packOutput));
+        dataGenerator.addProvider(runClient,LangUtils.getZH_CN(packOutput));
+        dataGenerator.addProvider(runClient,new ModBlockModelProvider(packOutput,existingFileHelper));
+        dataGenerator.addProvider(runClient,new ModItemModelProvider(packOutput,existingFileHelper));
+        dataGenerator.addProvider(runClient,new ModLootTableProvider(packOutput,registries));
+        var blockTagProvider = dataGenerator.addProvider(runClient,new ModBlockTagProvider(packOutput,registries,existingFileHelper));
+        dataGenerator.addProvider(runClient,new ModItemTagProvider(packOutput,registries,blockTagProvider.contentsGetter(),existingFileHelper));
+        dataGenerator.addProvider(runServer,new FeatureReplacementProvider(packOutput,TerrainTectonicTrilithic.MODID,registries));
+        dataGenerator.addProvider(runServer,new ConfiguredFeatureProvider(packOutput,TerrainTectonicTrilithic.MODID,registries));
+        dataGenerator.addProvider(runServer,new PlacedFeatureProvider(packOutput,TerrainTectonicTrilithic.MODID,registries));
     }
     
     public static class LangUtils{

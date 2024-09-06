@@ -5,10 +5,10 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "terrain_tectonic_trilithic.refmap.json",
   "mixins": [
-
+    "worldgen.TTMixinFeature",
+    "worldgen.TTMixinFeaturePlaceContext"
   ],
   "client": [
-
   ],
   "injectors": {
     "defaultRequire": 1

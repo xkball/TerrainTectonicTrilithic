@@ -1,0 +1,11 @@
+{
+  "block.terrain_tectonic_trilithic.blaze_ore": "Blaze Ore",
+  "block.terrain_tectonic_trilithic.glacied_ore": "Glacied Ore",
+  "block.terrain_tectonic_trilithic.phyllore": "Phyllore",
+  "item.terrain_tectonic_trilithic.blaze_shard": "Blaze Shard",
+  "item.terrain_tectonic_trilithic.chlorophyll_shard": "Chlorophyll Shard",
+  "item.terrain_tectonic_trilithic.glacied_shard": "Glacied Shard",
+  "item.terrain_tectonic_trilithic.icon": "icon",
+  "itemGroup.tin_tea_tech.blocs": "TinTeaTech: Blocks",
+  "itemGroup.tin_tea_tech.misc": "TinTeaTech: Misc"
+}

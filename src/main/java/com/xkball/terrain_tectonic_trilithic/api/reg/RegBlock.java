@@ -8,16 +8,22 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @MethodsReturnNonnullByDefault
@@ -25,15 +31,16 @@ import java.util.function.Supplier;
 public class RegBlock<T extends Block> implements ItemLike {
     
     public static final Map<ResourceLocation, RegBlock<?>> REG_BLOCK_POOL = new Object2ReferenceOpenHashMap<>();
-    
+    public static final BiConsumer<BlockStateProvider,RegBlock<?>> SIMPLE_CUBE_ALL = (p,self) -> p.simpleBlock(self.get(),p.cubeAll(self.get()));
     private final AutoRegHolder<Block,T> holder;
     private final String name;
     private I18NEntry i18n;
-    private RegItem<? extends BlockItem> blockItemHolder;
-    private Class<? extends BlockEntity> blockEntityClass;
-    private Class<? extends BlockEntityRenderer<?>> renderClass;
-    private ResourceLocation blockStateLocation;
-    private ResourceLocation itemModelLocation;
+    private RegItem<? extends BlockItem> blockItemHolder = null;
+    private Class<? extends BlockEntity> blockEntityClass = null;
+    private Class<? extends BlockEntityRenderer<?>> renderClass = null;
+    private BiConsumer<BlockStateProvider,RegBlock<?>> blockStateProviderConsumer = null;
+    private ResourceLocation itemModelLocation = null;
+    private final List<TagKey<Block>> tagList = new ArrayList<>();
     
     public RegBlock(String name, Supplier<T> supplier) {
         this.name = name;
@@ -41,13 +48,27 @@ public class RegBlock<T extends Block> implements ItemLike {
         REG_BLOCK_POOL.put(VanillaUtils.modRL(name),this);
     }
     
-    public RegBlock<T> setBlockItem(Supplier<? extends BlockItem> supplier) {
-        blockItemHolder = new RegItem<>(this.name,supplier);
+    public RegBlock<T> setBlockItem(Function<T,? extends BlockItem> function) {
+        blockItemHolder = new RegItem<>(this.name,() -> function.apply(holder.get()));
         return this;
     }
     
-    public RegBlock<T> simpleBlockItem(){
+    public RegBlock<T> setSimpleBlockItem(){
         blockItemHolder = new RegItem<>(this.name, () -> new BlockItem(holder.get(), new Item.Properties()));
+        itemModelLocation = VanillaUtils.modRL(name);
+        return this;
+    }
+    
+    @SafeVarargs
+    public final RegBlock<T> setTags(TagKey<Block>... tags){
+        tagList.clear();
+        tagList.addAll(List.of(tags));
+        return this;
+    }
+    
+    @SafeVarargs
+    public final RegBlock<T> setItemTags(TagKey<Item>... tags){
+        blockItemHolder.setTags(tags);
         return this;
     }
     
@@ -56,8 +77,13 @@ public class RegBlock<T extends Block> implements ItemLike {
         return this;
     }
     
-    public RegBlock<T> setBlockStateLocation(ResourceLocation location){
-        this.blockStateLocation = location;
+    public RegBlock<T> setDataGenBlockModel(BiConsumer<BlockStateProvider,RegBlock<?>> consumer){
+        this.blockStateProviderConsumer = consumer;
+        return this;
+    }
+    
+    public RegBlock<T> setDefaultItemModelParent(){
+        this.itemModelLocation = VanillaUtils.modRL(name);
         return this;
     }
     
@@ -77,13 +103,13 @@ public class RegBlock<T extends Block> implements ItemLike {
     }
     
     @Nullable
-    public ResourceLocation getItemModelLocation() {
-        return itemModelLocation;
+    public BiConsumer<BlockStateProvider, RegBlock<?>> getBlockStateProviderConsumer() {
+        return blockStateProviderConsumer;
     }
     
     @Nullable
-    public ResourceLocation getBlockStateLocation() {
-        return blockStateLocation;
+    public ResourceLocation getItemModelLocation() {
+        return itemModelLocation;
     }
     
     @Nullable
@@ -96,6 +122,9 @@ public class RegBlock<T extends Block> implements ItemLike {
         return i18n;
     }
     
+    public List<TagKey<Block>> getTagList() {
+        return tagList;
+    }
     
     public T get(){
         return holder.get();

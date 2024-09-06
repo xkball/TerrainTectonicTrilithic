@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": "terrain_tectonic_trilithic:lake_bottom_block",
+  "step": "underground_decoration"
+}

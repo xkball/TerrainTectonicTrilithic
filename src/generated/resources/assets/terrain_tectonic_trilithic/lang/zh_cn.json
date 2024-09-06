@@ -1,0 +1,11 @@
+{
+  "block.terrain_tectonic_trilithic.blaze_ore": "炽焱矿",
+  "block.terrain_tectonic_trilithic.glacied_ore": "坚冰矿",
+  "block.terrain_tectonic_trilithic.phyllore": "叶绿矿",
+  "item.terrain_tectonic_trilithic.blaze_shard": "炽焱碎片",
+  "item.terrain_tectonic_trilithic.chlorophyll_shard": "叶绿碎片",
+  "item.terrain_tectonic_trilithic.glacied_shard": "坚冰碎片",
+  "item.terrain_tectonic_trilithic.icon": "测试物品",
+  "itemGroup.tin_tea_tech.blocs": "锡茶科技: 方块",
+  "itemGroup.tin_tea_tech.misc": "锡茶科技: 杂项"
+}

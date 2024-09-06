@@ -1,0 +1,25 @@
+{
+  "featureName": "iceberg",
+  "replacementData": [
+    {
+      "originBlockWeight": 50,
+      "predicate": {
+        "type": "predicate",
+        "value": {
+          "blocks": "minecraft:blue_ice"
+        }
+      },
+      "stateAndWeights": [
+        {
+          "block_state": {
+            "Name": "terrain_tectonic_trilithic:glacied_ore",
+            "Properties": {
+              "age": "0"
+            }
+          },
+          "weight": 5
+        }
+      ]
+    }
+  ]
+}

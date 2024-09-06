@@ -33,6 +33,7 @@ public class VanillaUtils {
         };
     }
     
+    //server only
     public static void runCommand(String command, LivingEntity livingEntity) {
         // Raise permission level to 2, akin to what vanilla sign does
         CommandSourceStack cmdSrc = livingEntity.createCommandSourceStack().withPermission(2);

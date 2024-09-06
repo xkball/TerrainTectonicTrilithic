@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "terrain_tectonic_trilithic:block/glacied_ore"
+  }
+}
