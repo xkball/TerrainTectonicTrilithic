@@ -2,16 +2,19 @@ package com.xkball.terrain_tectonic_trilithic.utils;
 
 import com.xkball.terrain_tectonic_trilithic.TerrainTectonicTrilithic;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec2;
 
 public class VanillaUtils {
     
-    public static ResourceLocation modRL(String path) {
+    public static ResourceLocation modRL(String path)  {
         return rLOf(TerrainTectonicTrilithic.MODID, path);
     }
     
@@ -24,7 +27,7 @@ public class VanillaUtils {
     }
     
     public static ItemInteractionResult itemInteractionFrom(InteractionResult result) {
-        return switch (result){
+        return switch (result) {
             case SUCCESS, SUCCESS_NO_ITEM_USED -> ItemInteractionResult.SUCCESS;
             case CONSUME -> ItemInteractionResult.CONSUME;
             case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
@@ -44,7 +47,23 @@ public class VanillaUtils {
     }
     
     //irrelevant vanilla(笑)
-    public static int getColor(int r,int g,int b,int a){
+    public static int getColor(int r, int g, int b, int a) {
         return a << 24 | r << 16 | g << 8 | b;
     }
+    
+    public static boolean haveEnoughDamageToUse(ItemStack stack) {
+        return stack.getDamageValue() >= stack.getMaxDamage() - 1;
+    }
+    
+    @SuppressWarnings("SuspiciousNameCombination")
+    public static Vec2 rotate90FormBlockCenterYP(Vec2 point, int times) {
+        times = times % 4;
+        if (times == 0) return point;
+        var x = point.x;
+        var y = point.y;
+        if (times == 1) return new Vec2(16 - y, x);
+        if (times == 2) return new Vec2(16 - x, 16 - y);
+        return new Vec2(y, 16 - x);
+    }
+    
 }
