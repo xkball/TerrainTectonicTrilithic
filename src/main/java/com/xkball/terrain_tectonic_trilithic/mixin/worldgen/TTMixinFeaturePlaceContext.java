@@ -16,9 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(FeaturePlaceContext.class)
 public abstract class TTMixinFeaturePlaceContext implements TTFeaturePlaceContextExtension {
     
-    @Shadow public abstract WorldGenLevel level();
+    @Shadow
+    public abstract WorldGenLevel level();
     
-    @Shadow public abstract RandomSource random();
+    @Shadow
+    public abstract RandomSource random();
     
     @Unique
     private boolean terrainTectonicTrilithic$hooked;
@@ -28,7 +30,7 @@ public abstract class TTMixinFeaturePlaceContext implements TTFeaturePlaceContex
     @Override
     public void terrainTectonicTrilithic$hookTheWorld(FeatureReplacementData data) {
         if (terrainTectonicTrilithic$hooked) return;
-        terrainTectonicTrilithic$fakeLevel = new WorldGenFakeLevel(this.level(),data);
+        terrainTectonicTrilithic$fakeLevel = new WorldGenFakeLevel(this.level(), data);
         terrainTectonicTrilithic$hooked = true;
     }
     
@@ -39,9 +41,9 @@ public abstract class TTMixinFeaturePlaceContext implements TTFeaturePlaceContex
         terrainTectonicTrilithic$hooked = false;
     }
     
-    @Inject(method = "level",at = @At("HEAD"),cancellable = true)
+    @Inject(method = "level", at = @At("HEAD"), cancellable = true)
     public void onGetLevel(CallbackInfoReturnable<WorldGenLevel> cir) {
-        if(!terrainTectonicTrilithic$hooked) return;
+        if (!terrainTectonicTrilithic$hooked) return;
         cir.setReturnValue(terrainTectonicTrilithic$fakeLevel);
         cir.cancel();
     }

@@ -12,7 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class StateRequireRenewableOre extends RenewableOreBlock{
+public class StateRequireRenewableOre extends RenewableOreBlock {
     
     private final LevelPosPredicate canPlaceOre;
     private final LevelPosPredicate canGrowAge;
@@ -27,9 +27,9 @@ public class StateRequireRenewableOre extends RenewableOreBlock{
     protected void tryPlaceNewOre(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         var mutPos = pos.mutable();
         for (int i = 0; i < 9; i++) {
-            mutPos.setWithOffset(pos,random.nextInt(5)-3,random.nextInt(5)-3,random.nextInt(5)-3);
-            if(canPlaceOre.test(level, mutPos)) {
-                level.setBlock(mutPos,this.defaultBlockState(), Block.UPDATE_ALL);
+            mutPos.setWithOffset(pos, random.nextInt(5) - 3, random.nextInt(5) - 3, random.nextInt(5) - 3);
+            if (canPlaceOre.test(level, mutPos)) {
+                level.setBlock(mutPos, this.defaultBlockState(), Block.UPDATE_ALL);
                 return;
             }
         }

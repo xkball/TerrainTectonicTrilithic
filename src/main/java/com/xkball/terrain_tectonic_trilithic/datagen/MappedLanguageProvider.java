@@ -8,15 +8,16 @@ import java.util.Map;
 
 public class MappedLanguageProvider extends LanguageProvider {
     
-    private final Map<String,String> map;
-    public MappedLanguageProvider(PackOutput output, Map<String,String> map, String locale) {
+    private final Map<String, String> map;
+    
+    public MappedLanguageProvider(PackOutput output, Map<String, String> map, String locale) {
         super(output, TerrainTectonicTrilithic.MODID, locale);
         this.map = map;
     }
     
     @Override
     protected void addTranslations() {
-        for(var entry : map.entrySet()) {
+        for (var entry : map.entrySet()) {
             add(entry.getKey(), entry.getValue());
         }
     }

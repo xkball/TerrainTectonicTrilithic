@@ -16,15 +16,15 @@ import java.util.Set;
 @MethodsReturnNonnullByDefault
 public class ModBlockLootProvider extends BlockLootSubProvider {
     
-    public ModBlockLootProvider( HolderLookup.Provider registries) {
+    public ModBlockLootProvider(HolderLookup.Provider registries) {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
     
     @Override
     protected void generate() {
-        this.add(TTBlocks.BLAZE_ORE.get(),this.createOreDrop(TTBlocks.BLAZE_ORE.get(), TTItems.BLAZE_SHARD.get()));
-        this.add(TTBlocks.GLACIED_ORE.get(),this.createOreDrop(TTBlocks.GLACIED_ORE.get(), TTItems.GLACIED_SHARD.get()));
-        this.add(TTBlocks.PHYLLORE.get(),this.createOreDrop(TTBlocks.PHYLLORE.get(),TTItems.CHLOROPHYLL_SHARD.get()));
+        this.add(TTBlocks.BLAZE_ORE.get(), this.createOreDrop(TTBlocks.BLAZE_ORE.get(), TTItems.BLAZE_SHARD.get()));
+        this.add(TTBlocks.GLACIED_ORE.get(), this.createOreDrop(TTBlocks.GLACIED_ORE.get(), TTItems.GLACIED_SHARD.get()));
+        this.add(TTBlocks.PHYLLORE.get(), this.createOreDrop(TTBlocks.PHYLLORE.get(), TTItems.CHLOROPHYLL_SHARD.get()));
     }
     
     @Override

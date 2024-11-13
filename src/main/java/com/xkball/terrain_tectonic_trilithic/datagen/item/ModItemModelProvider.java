@@ -14,8 +14,8 @@ public class ModItemModelProvider extends ItemModelProvider {
     
     @Override
     protected void registerModels() {
-        for(var item: RegItem.REG_ITEM_POOL.values()){
-            if(item.getModelLocation() != null){
+        for (var item : RegItem.REG_ITEM_POOL.values()) {
+            if (item.getModelLocation() != null) {
                 this.basicItem(item.getModelLocation());
             }
         }

@@ -27,17 +27,17 @@ public class FeatureReplacementProvider extends TTDataPackProvider<FeatureReplac
     
     @Override
     protected void buildObjectList() {
-        addObject("blue_ice",new FeatureReplacementData("blue_ice",List.of(
+        addObject("blue_ice", new FeatureReplacementData("blue_ice", List.of(
                 new FeatureReplacementData.SingleReplacementData(
                         new PredicatePredicate<>(new BlockStatePredicate(BlockPredicate.Builder.block().of(Blocks.BLUE_ICE).build())),
-                        List.of(new Pair<>(TTBlocks.GLACIED_ORE.get().defaultBlockState(),5)),
+                        List.of(new Pair<>(TTBlocks.GLACIED_ORE.get().defaultBlockState(), 5)),
                         50
                 )
         )));
-        addObject("iceberg",new FeatureReplacementData("iceberg",List.of(
+        addObject("iceberg", new FeatureReplacementData("iceberg", List.of(
                 new FeatureReplacementData.SingleReplacementData(
                         new PredicatePredicate<>(new BlockStatePredicate(BlockPredicate.Builder.block().of(Blocks.BLUE_ICE).build())),
-                        List.of(new Pair<>(TTBlocks.GLACIED_ORE.get().defaultBlockState(),5)),
+                        List.of(new Pair<>(TTBlocks.GLACIED_ORE.get().defaultBlockState(), 5)),
                         50
                 )
         )));

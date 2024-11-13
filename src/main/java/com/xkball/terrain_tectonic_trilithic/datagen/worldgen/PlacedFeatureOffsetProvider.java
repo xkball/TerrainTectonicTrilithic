@@ -22,8 +22,8 @@ public class PlacedFeatureOffsetProvider extends TTDataPackProvider<PlacedFeatur
     
     @Override
     protected void buildObjectList() {
-        addObject("cave_vines",new PlacedFeatureOffsetData(
-                CavePlacements.CAVE_VINES,new BlockPos(0,1,0)
+        addObject("cave_vines", new PlacedFeatureOffsetData(
+                CavePlacements.CAVE_VINES, new BlockPos(0, 1, 0)
         ));
     }
     

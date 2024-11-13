@@ -14,16 +14,15 @@ public class ModBlockModelProvider extends BlockStateProvider {
     
     @Override
     protected void registerStatesAndModels() {
-        for(var block : RegBlock.REG_BLOCK_POOL.values()){
+        for (var block : RegBlock.REG_BLOCK_POOL.values()) {
             var item = block.getBlockItemHolder();
-            if(block.getBlockStateProviderConsumer() != null){
-                block.getBlockStateProviderConsumer().accept(this,block);
+            if (block.getBlockStateProviderConsumer() != null) {
+                block.getBlockStateProviderConsumer().accept(this, block);
             }
-            if(item == null) continue;
-            if(block.getItemModelLocation() != null){
-                this.simpleBlockItem(block.get(),models().getExistingFile(block.getItemModelLocation()));
-            }
-            else if(item.getModelLocation() != null){
+            if (item == null) continue;
+            if (block.getItemModelLocation() != null) {
+                this.simpleBlockItem(block.get(), models().getExistingFile(block.getItemModelLocation()));
+            } else if (item.getModelLocation() != null) {
                 this.itemModels().basicItem(item.getModelLocation());
             }
             

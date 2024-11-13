@@ -21,9 +21,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
     
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        for(var item : RegItem.REG_ITEM_POOL.values()){
+        for (var item : RegItem.REG_ITEM_POOL.values()) {
             var tagList = item.getTagList();
-            tagList.forEach( tag -> this.tag(tag).add(item.get()));
+            tagList.forEach(tag -> this.tag(tag).add(item.get()));
         }
     }
 }

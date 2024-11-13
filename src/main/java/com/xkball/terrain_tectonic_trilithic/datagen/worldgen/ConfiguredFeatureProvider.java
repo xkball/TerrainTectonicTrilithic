@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ConfiguredFeatureProvider extends TTDataPackProvider<ConfiguredFeature<?, ?>>{
+public class ConfiguredFeatureProvider extends TTDataPackProvider<ConfiguredFeature<?, ?>> {
     
     public static final ConfiguredFeature<NoneFeatureConfiguration, LakeBottomBlockFeature> LAKE_BOTTOM_BLOCK_CONFIGURED_FEATURE = new ConfiguredFeature<>(TTRegistries.LAKE_BOTTOM_BLOCK_FEATURE.get(), NoneFeatureConfiguration.INSTANCE);
     

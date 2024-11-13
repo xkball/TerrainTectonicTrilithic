@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModLootTableProvider extends LootTableProvider {
     
     public ModLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output,Set.of(),List.of(new SubProviderEntry(ModBlockLootProvider::new, LootContextParamSets.BLOCK)), registries);
+        super(output, Set.of(), List.of(new SubProviderEntry(ModBlockLootProvider::new, LootContextParamSets.BLOCK)), registries);
     }
     
     @Override

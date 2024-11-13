@@ -5,11 +5,12 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.xkball.terrain_tectonic_trilithic.utils.BooleanOps;
 
-public record BinaryOpPredicate<T>(PredicateWithCodec<T> first, PredicateWithCodec<T> second, BooleanOps booleanOp) implements PredicateWithCodec<T>{
+public record BinaryOpPredicate<T>(PredicateWithCodec<T> first, PredicateWithCodec<T> second,
+                                   BooleanOps booleanOp) implements PredicateWithCodec<T> {
     
     @Override
     public boolean accept(T t) {
-        return booleanOp.apply(first.accept(t),second.accept(t) );
+        return booleanOp.apply(first.accept(t), second.accept(t));
     }
     
     @Override

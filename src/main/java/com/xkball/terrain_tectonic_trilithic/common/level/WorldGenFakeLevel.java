@@ -54,28 +54,28 @@ public class WorldGenFakeLevel implements WorldGenLevel, LazyPlaceBlockWorldGenL
     private final WorldGenLevel inner;
     private final FeatureReplacementData featureReplacementData;
     private boolean finished = false;
-    private final HashMap<BlockPos, Pair<BlockState,Pair<Integer,Integer>>> setBlockMap = new HashMap<>();
+    private final HashMap<BlockPos, Pair<BlockState, Pair<Integer, Integer>>> setBlockMap = new HashMap<>();
     
     public WorldGenFakeLevel(WorldGenLevel inner, FeatureReplacementData featureReplacementData) {
         this.inner = inner;
         this.featureReplacementData = featureReplacementData;
-        if(inner instanceof WorldGenFakeLevel){
+        if (inner instanceof WorldGenFakeLevel) {
             throw new IllegalArgumentException("Can not use a WorldGenFakeLevel as a inner world of WorldGenFakeLevel.");
         }
     }
     
     @Override
     public void doAllSetBlock(RandomSource randomSource) {
-        if(finished) throw new IllegalStateException("world gen should finished.");
+        if (finished) throw new IllegalStateException("world gen should finished.");
         finished = true;
-        for(var entry : setBlockMap.entrySet()) {
+        for (var entry : setBlockMap.entrySet()) {
             var pos = entry.getKey();
             var state = entry.getValue().getFirst();
             var flag = entry.getValue().getSecond().getFirst();
             var recursionLeft = entry.getValue().getSecond().getSecond();
             assert inner.ensureCanWrite(pos);
             
-            inner.setBlock(pos,featureReplacementData.getReplacementBlockState(state,randomSource), flag, recursionLeft);
+            inner.setBlock(pos, featureReplacementData.getReplacementBlockState(state, randomSource), flag, recursionLeft);
         }
     }
     
@@ -132,7 +132,7 @@ public class WorldGenFakeLevel implements WorldGenLevel, LazyPlaceBlockWorldGenL
     
     @Override
     public void playSound(@Nullable Player player, BlockPos pos, SoundEvent sound, SoundSource source, float volume, float pitch) {
-        inner.playSound(player,pos,sound,source,volume,pitch);
+        inner.playSound(player, pos, sound, source, volume, pitch);
     }
     
     @Override
@@ -186,12 +186,12 @@ public class WorldGenFakeLevel implements WorldGenLevel, LazyPlaceBlockWorldGenL
     
     @Override
     public List<Entity> getEntities(@Nullable Entity entity, AABB area, Predicate<? super Entity> predicate) {
-        return inner.getEntities(entity,area,predicate);
+        return inner.getEntities(entity, area, predicate);
     }
     
     @Override
     public <T extends Entity> List<T> getEntities(EntityTypeTest<Entity, T> entityTypeTest, AABB bounds, Predicate<? super T> predicate) {
-        return inner.getEntities(entityTypeTest,bounds,predicate);
+        return inner.getEntities(entityTypeTest, bounds, predicate);
     }
     
     @Override
@@ -268,8 +268,8 @@ public class WorldGenFakeLevel implements WorldGenLevel, LazyPlaceBlockWorldGenL
     @Override
     public boolean setBlock(BlockPos pos, BlockState state, int flags, int recursionLeft) {
         if (!inner.ensureCanWrite(pos)) return false;
-        if(!finished){
-            setBlockMap.put(pos,new Pair<>(state,new Pair<>(flags,recursionLeft)));
+        if (!finished) {
+            setBlockMap.put(pos, new Pair<>(state, new Pair<>(flags, recursionLeft)));
             return true;
         }
         return inner.setBlock(pos, state, flags, recursionLeft);

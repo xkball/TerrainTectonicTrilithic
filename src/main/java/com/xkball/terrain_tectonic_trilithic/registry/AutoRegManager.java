@@ -9,18 +9,18 @@ public enum AutoRegManager {
     INSTANCE;
     
     public static void init(ModContainer container) {
-        if(container instanceof FMLModContainer fmlModContainer) {
+        if (container instanceof FMLModContainer fmlModContainer) {
             try {
                 var scanResultField = FMLModContainer.class.getDeclaredField("scanResults");
                 scanResultField.setAccessible(true);
-                AutoRegManager.INSTANCE._init(container.getModId(),(ModFileScanData) scanResultField.get(fmlModContainer));
+                AutoRegManager.INSTANCE._init(container.getModId(), (ModFileScanData) scanResultField.get(fmlModContainer));
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
         }
     }
     
-    private void _init(String modid,ModFileScanData modFileScanData){
+    private void _init(String modid, ModFileScanData modFileScanData) {
         //todo 对应component的I18N注解处理(仅DataGen时)
     }
 }

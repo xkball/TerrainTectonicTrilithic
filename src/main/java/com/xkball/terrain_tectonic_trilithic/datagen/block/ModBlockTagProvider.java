@@ -20,7 +20,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
     
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        for (var block : RegBlock.REG_BLOCK_POOL.values()){
+        for (var block : RegBlock.REG_BLOCK_POOL.values()) {
             var list = block.getTagList();
             list.forEach(tag -> this.tag(tag).add(block.get()));
         }

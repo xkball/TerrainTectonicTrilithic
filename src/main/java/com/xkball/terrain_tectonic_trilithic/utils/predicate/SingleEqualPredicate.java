@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 
 public class SingleEqualPredicate<T> implements PredicateWithCodec<T> {
-
+    
     private final T value;
     
     public SingleEqualPredicate(@Nonnull T value) {

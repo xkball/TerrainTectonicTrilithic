@@ -31,73 +31,73 @@ import java.util.function.Supplier;
 public class RegBlock<T extends Block> implements ItemLike {
     
     public static final Map<ResourceLocation, RegBlock<?>> REG_BLOCK_POOL = new Object2ReferenceOpenHashMap<>();
-    public static final BiConsumer<BlockStateProvider,RegBlock<?>> SIMPLE_CUBE_ALL = (p,self) -> p.simpleBlock(self.get(),p.cubeAll(self.get()));
-    private final AutoRegHolder<Block,T> holder;
+    public static final BiConsumer<BlockStateProvider, RegBlock<?>> SIMPLE_CUBE_ALL = (p, self) -> p.simpleBlock(self.get(), p.cubeAll(self.get()));
+    private final AutoRegHolder<Block, T> holder;
     private final String name;
     private I18NEntry i18n;
     private RegItem<? extends BlockItem> blockItemHolder = null;
     private Class<? extends BlockEntity> blockEntityClass = null;
     private Class<? extends BlockEntityRenderer<?>> renderClass = null;
-    private BiConsumer<BlockStateProvider,RegBlock<?>> blockStateProviderConsumer = null;
+    private BiConsumer<BlockStateProvider, RegBlock<?>> blockStateProviderConsumer = null;
     private ResourceLocation itemModelLocation = null;
     private final List<TagKey<Block>> tagList = new ArrayList<>();
     
     public RegBlock(String name, Supplier<T> supplier) {
         this.name = name;
-        this.holder = AutoRegHolder.<Block,T>create(supplier).bind(TTRegistries.BLOCK,name);
-        REG_BLOCK_POOL.put(VanillaUtils.modRL(name),this);
+        this.holder = AutoRegHolder.<Block, T>create(supplier).bind(TTRegistries.BLOCK, name);
+        REG_BLOCK_POOL.put(VanillaUtils.modRL(name), this);
     }
     
-    public RegBlock<T> setBlockItem(Function<T,? extends BlockItem> function) {
-        blockItemHolder = new RegItem<>(this.name,() -> function.apply(holder.get()));
+    public RegBlock<T> setBlockItem(Function<T, ? extends BlockItem> function) {
+        blockItemHolder = new RegItem<>(this.name, () -> function.apply(holder.get()));
         return this;
     }
     
-    public RegBlock<T> setSimpleBlockItem(){
+    public RegBlock<T> setSimpleBlockItem() {
         blockItemHolder = new RegItem<>(this.name, () -> new BlockItem(holder.get(), new Item.Properties()));
         itemModelLocation = VanillaUtils.modRL(name);
         return this;
     }
     
     @SafeVarargs
-    public final RegBlock<T> setTags(TagKey<Block>... tags){
+    public final RegBlock<T> setTags(TagKey<Block>... tags) {
         tagList.clear();
         tagList.addAll(List.of(tags));
         return this;
     }
     
     @SafeVarargs
-    public final RegBlock<T> setItemTags(TagKey<Item>... tags){
+    public final RegBlock<T> setItemTags(TagKey<Item>... tags) {
         blockItemHolder.setTags(tags);
         return this;
     }
     
-    public RegBlock<T> setI18n(String en_us,String zh_cn) {
-        this.i18n = new I18NEntry("block."+ TerrainTectonicTrilithic.MODID+"."+name,en_us,zh_cn);
+    public RegBlock<T> setI18n(String en_us, String zh_cn) {
+        this.i18n = new I18NEntry("block." + TerrainTectonicTrilithic.MODID + "." + name, en_us, zh_cn);
         return this;
     }
     
-    public RegBlock<T> setDataGenBlockModel(BiConsumer<BlockStateProvider,RegBlock<?>> consumer){
+    public RegBlock<T> setDataGenBlockModel(BiConsumer<BlockStateProvider, RegBlock<?>> consumer) {
         this.blockStateProviderConsumer = consumer;
         return this;
     }
     
-    public RegBlock<T> setDefaultItemModelParent(){
+    public RegBlock<T> setDefaultItemModelParent() {
         this.itemModelLocation = VanillaUtils.modRL(name);
         return this;
     }
     
-    public RegBlock<T> setItemModelParent(ResourceLocation location){
+    public RegBlock<T> setItemModelParent(ResourceLocation location) {
         this.itemModelLocation = location;
         return this;
     }
     
-    public RegBlock<T> setItemModelLocation(ResourceLocation location){
+    public RegBlock<T> setItemModelLocation(ResourceLocation location) {
         this.blockItemHolder.setModelLocation(location);
         return this;
     }
     
-    public RegBlock<T> setCreativeTab(Holder<CreativeModeTab> tab){
+    public RegBlock<T> setCreativeTab(Holder<CreativeModeTab> tab) {
         this.blockItemHolder.setCreativeTab(tab);
         return this;
     }
@@ -126,7 +126,7 @@ public class RegBlock<T extends Block> implements ItemLike {
         return tagList;
     }
     
-    public T get(){
+    public T get() {
         return holder.get();
     }
     

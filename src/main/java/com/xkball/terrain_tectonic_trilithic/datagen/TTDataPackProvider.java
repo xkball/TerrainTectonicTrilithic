@@ -23,7 +23,7 @@ public abstract class TTDataPackProvider<T> implements DataProvider {
     private final String modid;
     private final CompletableFuture<HolderLookup.Provider> registries;
     private final Codec<T> codec;
-    private final List<Pair<String,T>> tList = new ArrayList<>();
+    private final List<Pair<String, T>> tList = new ArrayList<>();
     
     public TTDataPackProvider(PackOutput output, String modid, CompletableFuture<HolderLookup.Provider> registries, Codec<T> codec) {
         this.output = output;
@@ -43,19 +43,19 @@ public abstract class TTDataPackProvider<T> implements DataProvider {
                 })
                 .thenCompose(
                         registries_ -> CompletableFuture.allOf(this.tList
-                        .stream()
-                        .map(f -> writeObject(output,registries_,f.getSecond(),path.resolve(f.getFirst()+".json")))
-                        .toArray(CompletableFuture[]::new)));
+                                .stream()
+                                .map(f -> writeObject(output, registries_, f.getSecond(), path.resolve(f.getFirst() + ".json")))
+                                .toArray(CompletableFuture[]::new)));
     }
     
     protected abstract void buildObjectList();
     
-    protected void addObject(String fileName,T t){
-        tList.add(Pair.of(fileName,t));
+    protected void addObject(String fileName, T t) {
+        tList.add(Pair.of(fileName, t));
     }
     
     private CompletableFuture<?> writeObject(CachedOutput cachedOutput, HolderLookup.Provider registries_, T data, Path path) {
-        return DataProvider.saveStable(cachedOutput,registries_,codec,data,path);
+        return DataProvider.saveStable(cachedOutput, registries_, codec, data, path);
     }
     
     protected abstract Path resolveDirectory(Path root);

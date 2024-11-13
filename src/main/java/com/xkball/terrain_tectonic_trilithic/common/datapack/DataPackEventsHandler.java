@@ -17,30 +17,31 @@ import java.util.concurrent.Executor;
 public class DataPackEventsHandler {
     
     @EventBusSubscriber(modid = TerrainTectonicTrilithic.MODID, bus = EventBusSubscriber.Bus.MOD)
-    public static class ModEventHandler{
+    public static class ModEventHandler {
         @SubscribeEvent
-        public static void onRegDataPack(DataPackRegistryEvent.NewRegistry event){
+        public static void onRegDataPack(DataPackRegistryEvent.NewRegistry event) {
             event.dataPackRegistry(TTDataPacks.FEATURE_REPLACEMENT, FeatureReplacementData.CODEC);
         }
     }
     
     @EventBusSubscriber(modid = TerrainTectonicTrilithic.MODID, bus = EventBusSubscriber.Bus.GAME)
-    public static class GameEventHandler{
+    public static class GameEventHandler {
         @SubscribeEvent
-        public static void onDataPackReload(AddReloadListenerEvent event){
+        public static void onDataPackReload(AddReloadListenerEvent event) {
             event.addListener(
                     (PreparableReloadListener.PreparationBarrier preparationBarrier,
-                         ResourceManager resourceManager,
-                         ProfilerFiller preparationsProfiler,
-                         ProfilerFiller reloadProfiler,
-                         Executor backgroundExecutor,
-                         Executor gameExecutor) ->
-                            CompletableFuture.runAsync(() -> {},backgroundExecutor)
-                                 .thenCompose(preparationBarrier::wait)
-                                 .thenRunAsync(() -> FeatureReplacementData.runFeatureReplaceHook(event.getRegistryAccess()),gameExecutor)
+                     ResourceManager resourceManager,
+                     ProfilerFiller preparationsProfiler,
+                     ProfilerFiller reloadProfiler,
+                     Executor backgroundExecutor,
+                     Executor gameExecutor) ->
+                            CompletableFuture.runAsync(() -> {
+                                    }, backgroundExecutor)
+                                    .thenCompose(preparationBarrier::wait)
+                                    .thenRunAsync(() -> FeatureReplacementData.runFeatureReplaceHook(event.getRegistryAccess()), gameExecutor)
             );
         }
     }
     
-
+    
 }

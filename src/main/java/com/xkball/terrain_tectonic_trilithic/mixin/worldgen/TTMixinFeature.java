@@ -32,9 +32,9 @@ public class TTMixinFeature implements TTFeatureExtension {
     
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Redirect(method = "place(Lnet/minecraft/world/level/levelgen/feature/configurations/FeatureConfiguration;Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/levelgen/feature/Feature;place(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z"))
-    public <FC extends FeatureConfiguration> boolean onPlaceHead(Feature instance, FeaturePlaceContext<FC> context){
-        if(terrainTectonicTrilithic$hooked){
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/levelgen/feature/Feature;place(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z"))
+    public <FC extends FeatureConfiguration> boolean onPlaceHead(Feature instance, FeaturePlaceContext<FC> context) {
+        if (terrainTectonicTrilithic$hooked) {
             ((TTFeaturePlaceContextExtension) context).terrainTectonicTrilithic$hookTheWorld(terrainTectonicTrilithic$featureReplacementData);
             terrainTectonicTrilithic$featurePlaceContext = (TTFeaturePlaceContextExtension) context;
         }
@@ -43,13 +43,14 @@ public class TTMixinFeature implements TTFeatureExtension {
     
     @Inject(method = "place(Lnet/minecraft/world/level/levelgen/feature/configurations/FeatureConfiguration;Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z",
             at = @At("RETURN"))
-    public <FC extends FeatureConfiguration> void onPlaceEnd(FC config, WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin, CallbackInfoReturnable<Boolean> cir){
-        if(!terrainTectonicTrilithic$hooked) return;
-        if(terrainTectonicTrilithic$featurePlaceContext != null) terrainTectonicTrilithic$featurePlaceContext.terrainTectonicTrilithic$finishHook();
+    public <FC extends FeatureConfiguration> void onPlaceEnd(FC config, WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin, CallbackInfoReturnable<Boolean> cir) {
+        if (!terrainTectonicTrilithic$hooked) return;
+        if (terrainTectonicTrilithic$featurePlaceContext != null)
+            terrainTectonicTrilithic$featurePlaceContext.terrainTectonicTrilithic$finishHook();
         terrainTectonicTrilithic$featurePlaceContext = null;
     }
     
-    public void terrainTectonicTrilithic$hook(@Nullable FeatureReplacementData data){
+    public void terrainTectonicTrilithic$hook(@Nullable FeatureReplacementData data) {
         terrainTectonicTrilithic$featureReplacementData = data;
         terrainTectonicTrilithic$hooked = data != null;
     }

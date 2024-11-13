@@ -25,7 +25,7 @@ public class PlacedFeatureProvider extends TTDataPackProvider<PlacedFeature> {
     
     @Override
     protected void buildObjectList() {
-        addObject("lake_bottom_block",new PlacedFeature(Holder.direct(ConfiguredFeatureProvider.LAKE_BOTTOM_BLOCK_CONFIGURED_FEATURE), List.of(
+        addObject("lake_bottom_block", new PlacedFeature(Holder.direct(ConfiguredFeatureProvider.LAKE_BOTTOM_BLOCK_CONFIGURED_FEATURE), List.of(
                 RarityFilter.onAverageOnceEvery(64), InSquarePlacement.spread(), BiomeFilter.biome()
         )));
     }

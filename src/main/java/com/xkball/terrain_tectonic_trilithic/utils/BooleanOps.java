@@ -5,7 +5,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import org.jetbrains.annotations.NotNull;
 
-public enum BooleanOps implements StringRepresentable  {
+public enum BooleanOps implements StringRepresentable {
     FALSE(BooleanOp.FALSE),
     NOT_OR(BooleanOp.NOT_OR),
     ONLY_SECOND(BooleanOp.ONLY_SECOND),
@@ -31,7 +31,7 @@ public enum BooleanOps implements StringRepresentable  {
         this.booleanOp = booleanOp;
     }
     
-    public boolean apply(boolean primaryBool, boolean secondaryBool){
+    public boolean apply(boolean primaryBool, boolean secondaryBool) {
         return booleanOp.apply(primaryBool, secondaryBool);
     }
     

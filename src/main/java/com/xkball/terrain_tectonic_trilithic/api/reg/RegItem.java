@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 @MethodsReturnNonnullByDefault
 public class RegItem<T extends Item> implements ItemLike {
     
-    public static final Map<ResourceLocation,RegItem<?>> REG_ITEM_POOL = new Object2ReferenceOpenHashMap<>();
+    public static final Map<ResourceLocation, RegItem<?>> REG_ITEM_POOL = new Object2ReferenceOpenHashMap<>();
     public static final List<RegItem<?>> CREATED_ORDER_LIST = new ArrayList<>();
     
     private final AutoRegHolder<Item, T> holder;
@@ -33,8 +33,8 @@ public class RegItem<T extends Item> implements ItemLike {
     
     public RegItem(String name, Supplier<T> supplier) {
         this.name = name;
-        this.holder = AutoRegHolder.<Item,T>create(supplier).bind(TTRegistries.ITEM,name);
-        REG_ITEM_POOL.put(VanillaUtils.modRL(name),this);
+        this.holder = AutoRegHolder.<Item, T>create(supplier).bind(TTRegistries.ITEM, name);
+        REG_ITEM_POOL.put(VanillaUtils.modRL(name), this);
         CREATED_ORDER_LIST.add(this);
     }
     
@@ -45,18 +45,18 @@ public class RegItem<T extends Item> implements ItemLike {
     
     @SuppressWarnings("UnusedReturnValue")
     @SafeVarargs
-    public final RegItem<T> setTags(TagKey<Item>... tags){
+    public final RegItem<T> setTags(TagKey<Item>... tags) {
         tagList.clear();
         tagList.addAll(List.of(tags));
         return this;
     }
     
-    public RegItem<T> setI18n(String en_us,String zh_cn) {
-        this.i18n = new I18NEntry("item."+ TerrainTectonicTrilithic.MODID+"."+name,en_us,zh_cn);
+    public RegItem<T> setI18n(String en_us, String zh_cn) {
+        this.i18n = new I18NEntry("item." + TerrainTectonicTrilithic.MODID + "." + name, en_us, zh_cn);
         return this;
     }
     
-    public RegItem<T> setDefaultSimpleModel(){
+    public RegItem<T> setDefaultSimpleModel() {
         this.modelLocation = VanillaUtils.modRL(name);
         return this;
     }
@@ -71,7 +71,7 @@ public class RegItem<T extends Item> implements ItemLike {
         return holder;
     }
     
-    public T get(){
+    public T get() {
         return holder.get();
     }
     

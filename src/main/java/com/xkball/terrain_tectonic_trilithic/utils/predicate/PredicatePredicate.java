@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 
 import java.util.function.Predicate;
 
-public record PredicatePredicate<T>(Predicate<T> predicate) implements PredicateWithCodec<T>{
+public record PredicatePredicate<T>(Predicate<T> predicate) implements PredicateWithCodec<T> {
     
     @Override
     public boolean accept(T t) {
@@ -18,6 +18,6 @@ public record PredicatePredicate<T>(Predicate<T> predicate) implements Predicate
     }
     
     public static <T> MapCodec<PredicatePredicate<T>> createCodec(Codec<Predicate<T>> predicateCodec) {
-        return predicateCodec.xmap(PredicatePredicate::new,PredicatePredicate::predicate).fieldOf("value");
+        return predicateCodec.xmap(PredicatePredicate::new, PredicatePredicate::predicate).fieldOf("value");
     }
 }

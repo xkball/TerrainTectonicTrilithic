@@ -6,9 +6,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.xkball.terrain_tectonic_trilithic.api.loot.SimpleLootTable;
 import com.xkball.terrain_tectonic_trilithic.api.loot.SingleLootTable;
+import com.xkball.terrain_tectonic_trilithic.api.loot.WightLootTable;
 import com.xkball.terrain_tectonic_trilithic.common.datapack.TTDataPacks;
 import com.xkball.terrain_tectonic_trilithic.utils.CodecUtils;
-import com.xkball.terrain_tectonic_trilithic.api.loot.WightLootTable;
 import com.xkball.terrain_tectonic_trilithic.utils.predicate.PredicateWithCodec;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.minecraft.core.RegistryAccess;
@@ -33,14 +33,14 @@ public class FeatureReplacementData {
     public final String featureName;
     public final List<SingleReplacementData> replacementData;
     private final Map<BlockState, SimpleLootTable<BlockState>> cache = new Reference2ObjectArrayMap<>();
-
+    
     public FeatureReplacementData(String featureName, List<SingleReplacementData> replacementData) {
         this.featureName = featureName;
         this.replacementData = replacementData;
     }
     
     public BlockState getReplacementBlockState(BlockState origin, RandomSource random) {
-        return cache.computeIfAbsent(origin,state -> {
+        return cache.computeIfAbsent(origin, state -> {
             var alternatives = this.replacementData
                     .stream()
                     .filter(d -> d.predicate().accept(state))
@@ -53,15 +53,15 @@ public class FeatureReplacementData {
         }).roll(random);
     }
     
-    public static void runFeatureReplaceHook(RegistryAccess registryAccess){
+    public static void runFeatureReplaceHook(RegistryAccess registryAccess) {
         var logger = LogUtils.getLogger();
         var features = registryAccess.registry(Registries.FEATURE).orElseThrow();
         var replacements = registryAccess.registry(TTDataPacks.FEATURE_REPLACEMENT).orElseThrow();
         
-        features.forEach(feature -> ((TTFeatureExtension)feature).terrainTectonicTrilithic$hook(null));
-        for(var replacement : replacements){
+        features.forEach(feature -> ((TTFeatureExtension) feature).terrainTectonicTrilithic$hook(null));
+        for (var replacement : replacements) {
             var feature = (TTFeatureExtension) features.get(ResourceLocation.parse(replacement.featureName));
-            if(feature == null) {
+            if (feature == null) {
                 logger.warn("FeatureReplacementData: missing feature {}", replacement.featureName);
                 continue;
             }
@@ -70,12 +70,13 @@ public class FeatureReplacementData {
     }
     
     public FeatureReplacementData combine(@Nullable FeatureReplacementData other) {
-        if(other == null) return this;
+        if (other == null) return this;
         assert featureName.equals(other.featureName);
-        return new FeatureReplacementData(featureName, Stream.of(replacementData,other.replacementData).flatMap(List::stream).toList());
+        return new FeatureReplacementData(featureName, Stream.of(replacementData, other.replacementData).flatMap(List::stream).toList());
     }
     
-    public record SingleReplacementData(PredicateWithCodec<BlockState> predicate, List<Pair<BlockState,Integer>> statesAndWeight, int originBlockWeight){
+    public record SingleReplacementData(PredicateWithCodec<BlockState> predicate,
+                                        List<Pair<BlockState, Integer>> statesAndWeight, int originBlockWeight) {
         
         public static final Codec<SingleReplacementData> CODEC = RecordCodecBuilder.create(ins -> ins.group(
                 CodecUtils.BLOCK_STATE_PREDICATE_CODEC.fieldOf("predicate").forGetter(o -> o.predicate),
@@ -86,13 +87,13 @@ public class FeatureReplacementData {
                 Codec.INT.fieldOf("originBlockWeight").forGetter(o -> o.originBlockWeight)
         ).apply(ins, SingleReplacementData::new));
         
-        public List<Pair<BlockState,Integer>> getAllStatesAndWeight(BlockState defaultBlockState) {
+        public List<Pair<BlockState, Integer>> getAllStatesAndWeight(BlockState defaultBlockState) {
             var result = new ArrayList<>(statesAndWeight);
             result.add(new Pair<>(defaultBlockState, originBlockWeight));
             return result;
         }
         
-        public static WightLootTable<BlockState> createLootList(List<Pair<BlockState,Integer>> statesAndWeight){
+        public static WightLootTable<BlockState> createLootList(List<Pair<BlockState, Integer>> statesAndWeight) {
             var dataMap = statesAndWeight.stream().collect(Pair.toMap());
             return new WightLootTable<>(
                     statesAndWeight.stream().map(Pair::getFirst).toList(),

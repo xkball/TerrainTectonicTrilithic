@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public record ListPredicate<T>(List<PredicateWithCodec<T>> predicates,ListOps listOps) implements PredicateWithCodec<T> {
+public record ListPredicate<T>(List<PredicateWithCodec<T>> predicates,
+                               ListOps listOps) implements PredicateWithCodec<T> {
     
     @SafeVarargs
     public ListPredicate(ListOps listOps, PredicateWithCodec<T>... predicates) {
-        this(List.of(predicates),listOps);
+        this(List.of(predicates), listOps);
     }
     
     @Override
@@ -27,7 +28,7 @@ public record ListPredicate<T>(List<PredicateWithCodec<T>> predicates,ListOps li
         return PredicateWithCodecType.LIST;
     }
     
-    public static <T> MapCodec<ListPredicate<T>> createCodec(Codec<PredicateWithCodec<T>> codec){
+    public static <T> MapCodec<ListPredicate<T>> createCodec(Codec<PredicateWithCodec<T>> codec) {
         return RecordCodecBuilder.mapCodec(ins -> ins.group(
                 codec.listOf().fieldOf("value").forGetter(ListPredicate::predicates),
                 ListOps.CODEC.fieldOf("list_op").forGetter(ListPredicate::listOps)
@@ -37,7 +38,8 @@ public record ListPredicate<T>(List<PredicateWithCodec<T>> predicates,ListOps li
     public enum ListOps implements StringRepresentable {
         ALL_MATCH(s -> s.allMatch(b -> b)),
         ANY_MATCH(s -> s.anyMatch(b -> b)),
-        NONE_MATCH(s -> s.noneMatch(b -> b)),;
+        NONE_MATCH(s -> s.noneMatch(b -> b)),
+        ;
         
         private final Predicate<Stream<Boolean>> innerPredicate;
         
