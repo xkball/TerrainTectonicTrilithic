@@ -4,12 +4,15 @@
   "block.terrain_tectonic_trilithic.phyllore": "Phyllore",
   "item.terrain_tectonic_trilithic.blaze_pickaxe_head": "Blaze Pickaxe Head",
   "item.terrain_tectonic_trilithic.blaze_shard": "Blaze Shard",
+  "item.terrain_tectonic_trilithic.blaze_shield": "Blaze Shield",
   "item.terrain_tectonic_trilithic.chlorophyll_shard": "Chlorophyll Shard",
+  "item.terrain_tectonic_trilithic.chlorophyll_shield": "Blaze Shield",
   "item.terrain_tectonic_trilithic.fake_food": "Mimicry Food",
   "item.terrain_tectonic_trilithic.glacied_shard": "Glacied Shard",
+  "item.terrain_tectonic_trilithic.glacied_shield": "Glacied Shield",
   "item.terrain_tectonic_trilithic.glcaied_pickaxe_head": "Glcaied Pickaxe Head",
   "item.terrain_tectonic_trilithic.icon": "icon",
-  "item.terrain_tectonic_trilithic.the_pickaxe": "The Pickaxe",
-  "itemGroup.tin_tea_tech.blocs": "TinTeaTech: Blocks",
-  "itemGroup.tin_tea_tech.misc": "TinTeaTech: Misc"
+  "item.terrain_tectonic_trilithic.throwable_pickaxe": "Throwable Pickaxe",
+  "item.terrain_tectonic_trilithic.throwable_sickle": "Throwalbe Sickle",
+  "itemGroup.tin_tea_tech.misc": "TerrainTectonicTrilithic"
 }

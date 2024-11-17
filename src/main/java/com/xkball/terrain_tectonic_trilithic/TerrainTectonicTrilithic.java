@@ -1,15 +1,18 @@
 package com.xkball.terrain_tectonic_trilithic;
 
 import com.mojang.logging.LogUtils;
-import com.xkball.terrain_tectonic_trilithic.client.entity.ThrownPickaxeEntityRenderer;
+import com.xkball.terrain_tectonic_trilithic.client.entity.ThrownToolEntityRenderer;
 import com.xkball.terrain_tectonic_trilithic.client.item.model.FakeFoodWrapper;
+import com.xkball.terrain_tectonic_trilithic.client.item.tooltip.ShieldMapClientImageTooltip;
 import com.xkball.terrain_tectonic_trilithic.common.block.TTBlocks;
 import com.xkball.terrain_tectonic_trilithic.common.item.TTItems;
+import com.xkball.terrain_tectonic_trilithic.common.item.tooltip.ShieldMapServerImageTooltip;
 import com.xkball.terrain_tectonic_trilithic.registry.AutoRegManager;
 import com.xkball.terrain_tectonic_trilithic.registry.TTRegistries;
 import com.xkball.terrain_tectonic_trilithic.test.PredicateTest;
 import com.xkball.terrain_tectonic_trilithic.utils.VanillaUtils;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,6 +24,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import org.slf4j.Logger;
@@ -30,7 +34,7 @@ import org.slf4j.Logger;
 public class TerrainTectonicTrilithic {
     
     public static final String MODID = "terrain_tectonic_trilithic";
-    
+    public static final ThreadLocal<RandomSource> GLOBAL_RANDOM = ThreadLocal.withInitial(RandomSource::createNewThreadLocalInstance);
     private static final Logger LOGGER = LogUtils.getLogger();
     
     
@@ -60,7 +64,7 @@ public class TerrainTectonicTrilithic {
         
         @SubscribeEvent
         public static void ber(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerEntityRenderer(TTRegistries.THROWN_PICKAXE_ENTITY_TYPE.get(), ThrownPickaxeEntityRenderer::new);
+            event.registerEntityRenderer(TTRegistries.THROWN_TOOL_ENTITY_TYPE.get(), ThrownToolEntityRenderer::new);
         }
         
         @SubscribeEvent
@@ -70,14 +74,15 @@ public class TerrainTectonicTrilithic {
         
         @SubscribeEvent
         public static void modifyBakingResult(ModelEvent.ModifyBakingResult event) {
-//            System.out.println(
-//                    event.getModels().keySet().stream().filter(bakedModel -> bakedModel.id().getNamespace().equals(MODID)).toList()
-//            );
             event.getModels().computeIfPresent(
                     new ModelResourceLocation(VanillaUtils.modRL("fake_food"), "inventory"),
                     (l,m) -> new FakeFoodWrapper(m)
             );
-            //System.out.println(event.getModels().get(new ModelResourceLocation(VanillaUtils.modRL("fake_food"), "inventory")));
+        }
+        
+        @SubscribeEvent
+        public static void onRegTooltip(RegisterClientTooltipComponentFactoriesEvent event){
+            event.register(ShieldMapServerImageTooltip.class,ShieldMapClientImageTooltip::new);
         }
     }
 }

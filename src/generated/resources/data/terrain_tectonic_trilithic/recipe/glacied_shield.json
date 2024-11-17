@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "Y": {
+      "item": "terrain_tectonic_trilithic:glacied_shard"
+    }
+  },
+  "pattern": [
+    "XYX",
+    "YYY",
+    "XYX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "terrain_tectonic_trilithic:glacied_shield"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "get_blaze_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "terrain_tectonic_trilithic:blaze_shield"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "get_special_arrow": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:spectral_arrow"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "terrain_tectonic_trilithic:blaze_pickaxe_head"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "get_blaze_shard",
+      "get_special_arrow"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "terrain_tectonic_trilithic:blaze_pickaxe_head"
+    ]
+  }
+}

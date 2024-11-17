@@ -52,8 +52,8 @@ public class TTDataGen {
         private static void init() {
             if (init) return;
             init = true;
-            addLangKey("itemGroup.tin_tea_tech.blocs", "TinTeaTech: Blocks", "锡茶科技: 方块");
-            addLangKey("itemGroup.tin_tea_tech.misc", "TinTeaTech: Misc", "锡茶科技: 杂项");
+            //addLangKey("itemGroup.tin_tea_tech.blocs", "TinTeaTech: Blocks", "锡茶科技: 方块");
+            addLangKey("itemGroup.tin_tea_tech.misc", "TerrainTectonicTrilithic", "自然矿物");
             for (var item : RegItem.REG_ITEM_POOL.values()) {
                 if (item.getI18n() == null) continue;
                 var i18n = item.getI18n();

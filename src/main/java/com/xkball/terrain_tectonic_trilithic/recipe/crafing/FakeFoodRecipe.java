@@ -51,9 +51,9 @@ public class FakeFoodRecipe extends CustomRecipe {
                 .filter(FOOD_INGREDIENT::test)
                 .findFirst().orElseThrow();
         var food = Objects.requireNonNull(item.get(DataComponents.FOOD));
-        result.set(DataComponents.FOOD,new FoodProperties.Builder().nutrition(food.nutrition()).build());
+        result.set(DataComponents.FOOD,new FoodProperties.Builder().nutrition(food.nutrition()).saturationModifier(food.saturation()/(2*food.nutrition())).build());
         result.set(TTDataComponents.FAKE_ITEM,new FakeFoodItem.FakeItem(item.copyWithCount(1)));
-        result.set(DataComponents.CUSTOM_NAME, Component.literal("\"").append(item.getHoverName()).append("\""));
+        result.set(DataComponents.ITEM_NAME, Component.literal("\"").append(item.getHoverName()).append("\""));
         return result;
     }
     

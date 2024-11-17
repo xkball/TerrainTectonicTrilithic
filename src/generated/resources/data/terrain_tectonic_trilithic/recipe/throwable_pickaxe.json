@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "terrain_tectonic_trilithic:blaze_pickaxe_head"
+    },
+    "y": {
+      "item": "terrain_tectonic_trilithic:glcaied_pickaxe_head"
+    },
+    "z": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "  x",
+    " z ",
+    "y  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "terrain_tectonic_trilithic:throwable_pickaxe"
+  }
+}

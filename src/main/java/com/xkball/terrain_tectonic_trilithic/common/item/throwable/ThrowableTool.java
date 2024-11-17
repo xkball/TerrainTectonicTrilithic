@@ -1,9 +1,12 @@
-package com.xkball.terrain_tectonic_trilithic.common.item;
+package com.xkball.terrain_tectonic_trilithic.common.item.throwable;
 
-import com.xkball.terrain_tectonic_trilithic.common.entity.ThrownPickaxeEntity;
+import com.xkball.terrain_tectonic_trilithic.common.entity.ThrownToolEntity;
+import com.xkball.terrain_tectonic_trilithic.common.item.TTItems;
 import com.xkball.terrain_tectonic_trilithic.utils.VanillaUtils;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -13,6 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
@@ -20,21 +24,18 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.Set;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ThePickaxe extends TieredItem {
+public abstract class ThrowableTool extends TieredItem {
     
-    public static final Set<ItemAbility> THE_PICKAXE_ABILITIES = Set.of(ItemAbilities.AXE_DIG, ItemAbilities.SWORD_DIG, ItemAbilities.PICKAXE_DIG, ItemAbilities.HOE_DIG, ItemAbilities.SHOVEL_DIG);
-    
+  
     public static final Tier TIER = new Tier() {
         @Override
         public int getUses() {
@@ -67,8 +68,12 @@ public class ThePickaxe extends TieredItem {
         }
     };
     
-    public ThePickaxe() {
-        super(TIER, new Properties()
+    public ThrowableTool(Item.Properties properties) {
+        super(TIER, properties);
+    }
+    
+    public static Item.Properties pickaxeProperties() {
+        return new Properties()
                 .fireResistant()
                 .stacksTo(1)
                 .attributes(DiggerItem.createAttributes(Tiers.NETHERITE, 3, -1))
@@ -78,13 +83,16 @@ public class ThePickaxe extends TieredItem {
                         Tool.Rule.minesAndDrops(BlockTags.MINEABLE_WITH_PICKAXE, 12),
                         Tool.Rule.minesAndDrops(BlockTags.MINEABLE_WITH_HOE, 12),
                         Tool.Rule.minesAndDrops(BlockTags.MINEABLE_WITH_SHOVEL, 12)
-                ), 12, 1)));
+                ), 12, 0));
     }
     
-    @Override
-    public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
-        return THE_PICKAXE_ABILITIES.contains(itemAbility);
+    public static Item.Properties sickleProperties() {
+        return new Properties()
+                .fireResistant()
+                .stacksTo(1)
+                .attributes(DiggerItem.createAttributes(Tiers.NETHERITE, 9, -1));
     }
+    
     
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -107,6 +115,11 @@ public class ThePickaxe extends TieredItem {
     }
     
     @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return true;
+    }
+    
+    @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if (VanillaUtils.haveEnoughDamageToUse(itemstack)) {
@@ -119,19 +132,23 @@ public class ThePickaxe extends TieredItem {
     
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
-        if (livingEntity instanceof Player player) {
+        if (livingEntity instanceof Player player && level instanceof ServerLevel serverLevel) {
             int i = this.getUseDuration(stack, livingEntity) - timeCharged;
             if (i > 0) {
-                //player.getCooldowns().addCooldown(this, 2);
+                player.getCooldowns().addCooldown(this, 4);
                 if (!level.isClientSide()) {
-                    var pe = new ThrownPickaxeEntity(level);
+                    var pe = new ThrownToolEntity(level);
                     pe.setPos(livingEntity.getEyePosition());
-                    pe.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.5F, 1.0F);
-                    if (player instanceof ServerPlayer sp) pe.setShooter(sp);
+                    pe.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, Math.min(1+i/30f,5f), 1.0F);
+                    if (player instanceof ServerPlayer sp) pe.setShooterAndTool(sp,stack);
+                    pe.setBehavior(getBehaviorType());
                     level.addFreshEntity(pe);
+                    stack.hurtAndBreak(2, serverLevel, livingEntity,item -> {});
                 }
             }
         }
         super.releaseUsing(stack, level, livingEntity, timeCharged);
     }
+    
+    public abstract ThrownToolEntity.BehaviorType getBehaviorType();
 }

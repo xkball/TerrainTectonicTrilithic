@@ -2,7 +2,7 @@ package com.xkball.terrain_tectonic_trilithic.registry;
 
 import com.xkball.terrain_tectonic_trilithic.TerrainTectonicTrilithic;
 import com.xkball.terrain_tectonic_trilithic.api.reg.RegItem;
-import com.xkball.terrain_tectonic_trilithic.common.entity.ThrownPickaxeEntity;
+import com.xkball.terrain_tectonic_trilithic.common.entity.ThrownToolEntity;
 import com.xkball.terrain_tectonic_trilithic.common.item.TTDataComponents;
 import com.xkball.terrain_tectonic_trilithic.common.item.TTItems;
 import com.xkball.terrain_tectonic_trilithic.common.worldgen.feature.LakeBottomBlockFeature;
@@ -53,17 +53,20 @@ public class TTRegistries {
 //            .build());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MISC_TAB = CREATIVE_TAB.register("misc", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.tin_tea_tech.misc"))
-            .icon(TTItems.THE_PICKAXE.get()::getDefaultInstance)
+            .icon(TTItems.THROWABLE_SICKLE.get()::getDefaultInstance)
             .withTabsBefore(CreativeModeTabs.FOOD_AND_DRINKS, CreativeModeTabs.INGREDIENTS, CreativeModeTabs.SPAWN_EGGS)
             .build());
     
     public static final DeferredHolder<Feature<?>, LakeBottomBlockFeature> LAKE_BOTTOM_BLOCK_FEATURE = FEATURE.register("lake_bottom_block", () -> new LakeBottomBlockFeature(NoneFeatureConfiguration.CODEC));
     
-    public static final DeferredHolder<EntityType<?>, EntityType<ThrownPickaxeEntity>> THROWN_PICKAXE_ENTITY_TYPE = ENTITY_TYPE.register("thrown_pickaxe", () ->
-            EntityType.Builder.<ThrownPickaxeEntity>of(ThrownPickaxeEntity::new, MobCategory.MISC)
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownToolEntity>> THROWN_TOOL_ENTITY_TYPE = ENTITY_TYPE.register("thrown_tool", () ->
+            EntityType.Builder.<ThrownToolEntity>of(ThrownToolEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f)
                     .clientTrackingRange(10)
-                    .build("thrown_pickaxe"));
+                    .build("thrown_tool"));
+    
+    public static final DeferredHolder<EntityDataSerializer<?>,EntityDataSerializer<ThrownToolEntity.BehaviorType>> THROWN_TOOL_TYPE = ENTITY_DATA_SERIALIZER.register(
+            "thrown_tool_type", () -> EntityDataSerializer.forValueType(ThrownToolEntity.BehaviorType.STREAM_CODEC));
     
     public static void init(IEventBus bus) {
         TTDataComponents.init();

@@ -1,8 +1,7 @@
 {
-	"credit": "Made with Blockbench",
 	"parent": "minecraft:item/handheld",
 	"textures": {
-		"layer0": "terrain_tectonic_trilithic:item/the_pickaxe"
+		"layer0": "terrain_tectonic_trilithic:item/throwable_pickaxe"
 	},
 	"display": {
 		"thirdperson_righthand": {
@@ -26,10 +25,10 @@
 			"scale": [1.36, 1.36, 1.36]
 		},
 		"ground": {
-			"scale": [2, 2, 2]
+			"scale": [1.6, 1.6, 1.6]
 		},
 		"gui": {
-			"scale": [2, 2, 2]
+			"scale": [1.6, 1.6, 1.6]
 		}
 	}
 }

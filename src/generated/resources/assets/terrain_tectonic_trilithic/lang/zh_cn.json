@@ -4,12 +4,15 @@
   "block.terrain_tectonic_trilithic.phyllore": "叶绿矿",
   "item.terrain_tectonic_trilithic.blaze_pickaxe_head": "炽焱镐头",
   "item.terrain_tectonic_trilithic.blaze_shard": "炽焱碎片",
+  "item.terrain_tectonic_trilithic.blaze_shield": "烈焰屏障",
   "item.terrain_tectonic_trilithic.chlorophyll_shard": "叶绿碎片",
+  "item.terrain_tectonic_trilithic.chlorophyll_shield": "叶绿屏障",
   "item.terrain_tectonic_trilithic.fake_food": "拟态食物",
   "item.terrain_tectonic_trilithic.glacied_shard": "坚冰碎片",
+  "item.terrain_tectonic_trilithic.glacied_shield": "坚冰屏障",
   "item.terrain_tectonic_trilithic.glcaied_pickaxe_head": "坚冰镐头",
   "item.terrain_tectonic_trilithic.icon": "测试物品",
-  "item.terrain_tectonic_trilithic.the_pickaxe": "镐子",
-  "itemGroup.tin_tea_tech.blocs": "锡茶科技: 方块",
-  "itemGroup.tin_tea_tech.misc": "锡茶科技: 杂项"
+  "item.terrain_tectonic_trilithic.throwable_pickaxe": "可投掷镐子",
+  "item.terrain_tectonic_trilithic.throwable_sickle": "可投掷镰刀",
+  "itemGroup.tin_tea_tech.misc": "自然矿物"
 }

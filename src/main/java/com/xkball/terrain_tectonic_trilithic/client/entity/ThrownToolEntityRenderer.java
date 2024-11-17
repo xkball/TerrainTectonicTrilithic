@@ -2,7 +2,7 @@ package com.xkball.terrain_tectonic_trilithic.client.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.xkball.terrain_tectonic_trilithic.common.entity.ThrownPickaxeEntity;
+import com.xkball.terrain_tectonic_trilithic.common.entity.ThrownToolEntity;
 import com.xkball.terrain_tectonic_trilithic.common.item.TTItems;
 import com.xkball.terrain_tectonic_trilithic.utils.VanillaUtils;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -22,18 +22,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @OnlyIn(Dist.CLIENT)
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ThrownPickaxeEntityRenderer extends EntityRenderer<ThrownPickaxeEntity> {
+public class ThrownToolEntityRenderer extends EntityRenderer<ThrownToolEntity> {
     
     private static final RandomSource RANDOM = RandomSource.create();
     private static final Axis PITCH = Axis.of(new Vector3f(-1, 1, 0));
     private static final Axis ROLL = Axis.of(new Vector3f(1, 1, 0));
     
-    public ThrownPickaxeEntityRenderer(EntityRendererProvider.Context context) {
+    public ThrownToolEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
     
     @Override
-    public void render(ThrownPickaxeEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(ThrownToolEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         var dv = entity.getDeltaMovement();
         if (dv.lengthSqr() > 1) {
             entity.renderPitch = (float) Math.atan(dv.y / Math.sqrt(dv.x * dv.x + dv.z * dv.z));
@@ -52,13 +52,13 @@ public class ThrownPickaxeEntityRenderer extends EntityRenderer<ThrownPickaxeEnt
         poseStack.mulPose(ROLL.rotationDegrees(entity.renderRoll));
         poseStack.mulPose(Axis.ZP.rotationDegrees(entity.renderZRotation - entity.renderZRotationDelta * (1 - partialTick)));
         //ClientUtils.renderAxis(bufferSource,poseStack);
-        Minecraft.getInstance().getItemRenderer().renderStatic(TTItems.THE_PICKAXE.get().getDefaultInstance(), ItemDisplayContext.NONE, packedLight, 0, poseStack, bufferSource, null, 42);
+        Minecraft.getInstance().getItemRenderer().renderStatic(entity.renderAs(), ItemDisplayContext.NONE, packedLight, 0, poseStack, bufferSource, null, 42);
         poseStack.popPose();
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
     
     @Override
-    public ResourceLocation getTextureLocation(ThrownPickaxeEntity entity) {
+    public ResourceLocation getTextureLocation(ThrownToolEntity entity) {
         return VanillaUtils.modRL("");
     }
 }

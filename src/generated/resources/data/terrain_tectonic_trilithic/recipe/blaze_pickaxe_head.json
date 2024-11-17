@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "terrain_tectonic_trilithic:blaze_shard"
+    },
+    "y": {
+      "item": "minecraft:spectral_arrow"
+    }
+  },
+  "pattern": [
+    "xxx",
+    " yx",
+    "y x"
+  ],
+  "result": {
+    "count": 1,
+    "id": "terrain_tectonic_trilithic:blaze_pickaxe_head"
+  }
+}

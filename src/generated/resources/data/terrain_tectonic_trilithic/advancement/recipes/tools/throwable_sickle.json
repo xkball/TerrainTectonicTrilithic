@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "get_head1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "terrain_tectonic_trilithic:glcaied_pickaxe_head"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "terrain_tectonic_trilithic:throwable_sickle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "get_head1"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "terrain_tectonic_trilithic:throwable_sickle"
+    ]
+  }
+}
