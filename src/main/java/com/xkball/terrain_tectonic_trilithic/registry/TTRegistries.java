@@ -53,7 +53,7 @@ public class TTRegistries {
 //            .build());
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MISC_TAB = CREATIVE_TAB.register("misc", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.tin_tea_tech.misc"))
-            .icon(TTItems.THROWABLE_SICKLE.get()::getDefaultInstance)
+            .icon(() -> TTItems.THROWABLE_SICKLE.get().getDefaultInstance())
             .withTabsBefore(CreativeModeTabs.FOOD_AND_DRINKS, CreativeModeTabs.INGREDIENTS, CreativeModeTabs.SPAWN_EGGS)
             .build());
     

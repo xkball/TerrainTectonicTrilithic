@@ -3,7 +3,6 @@ package com.xkball.terrain_tectonic_trilithic.client.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.xkball.terrain_tectonic_trilithic.common.entity.ThrownToolEntity;
-import com.xkball.terrain_tectonic_trilithic.common.item.TTItems;
 import com.xkball.terrain_tectonic_trilithic.utils.VanillaUtils;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
